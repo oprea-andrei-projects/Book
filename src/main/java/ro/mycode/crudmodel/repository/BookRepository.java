@@ -14,18 +14,18 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
 
     @Query("select  b from Book b order by b.title asc ")
-    public List<Book> getSortedBooks();
+     List<Book> getSortedBooks();
 
     @Query("select  b from Book b where b.author = ?1 ")
-    public List<Book> getBookByAuthor(String author);
+     List<Book> getBookByAuthor(String author);
 
     //select b from Book b where b.year = (select min(b.year) from Book b)
 
     @Query("select b from Book b where b.year = (select min(b.year) from Book b)")
-    public Book getOldestBook();
+     Book getOldestBook();
 
 
     @Query("select distinct b.genre from Book b order by b.genre")
-    public List<String> genres();
+     List<String> genres();
 
 }

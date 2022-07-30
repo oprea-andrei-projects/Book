@@ -1,5 +1,7 @@
 package ro.mycode.crudmodel.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
@@ -16,18 +18,40 @@ public class ControlBook {
     }
 
 
+//    @GetMapping("/allBooks")
+//    public List<Book> getAllBooks(){
+//        return  this.bookRepository.findAll();
+//    }
+
     @GetMapping("/allBooks")
-    public List<Book> getAllBooks(){
-        return  this.bookRepository.findAll();
+    public ResponseEntity<List<Book>> getAllBooks(){
+
+        List<Book> books = this.bookRepository.findAll();
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+
     }
 
+//    @PostMapping("/addBook")
+//    public  Book addBook(@RequestBody Book book){
+//        this.bookRepository.save(book);
+//        return  book;
+//    }
+
     @PostMapping("/addBook")
-    public  Book addBook(@RequestBody Book book){
+    public ResponseEntity<Book> addBoook(@RequestBody Book book){
+
         this.bookRepository.save(book);
-        return  book;
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
+
+
+
+
+
     @PutMapping("/updateBook")
-    public  Book updateBook(@RequestBody Book book){
+    public ResponseEntity<Book>  updateBook(@RequestBody Book book){
 
         Book book1 = bookRepository.findById(book.getId()).get();
 
@@ -36,8 +60,8 @@ public class ControlBook {
         book1.setGenre(book.getGenre());
         book1.setYear(book.getYear());
 
-        this.bookRepository.save(book1);
-        return book1;
+            this.bookRepository.save(book1);
+        return new ResponseEntity<>(book1,HttpStatus.OK);
 
 
     }
@@ -48,18 +72,25 @@ public class ControlBook {
         return bookRepository.findById(id).get();
     }
 
+
+
     @DeleteMapping("/deleteBook/{id}")
-    public void deleteBook(@PathVariable long id){
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
 
         Book myBook = this.bookRepository.findById(id).get();
         this.bookRepository.delete(myBook);
-
+        return new ResponseEntity<>(myBook, HttpStatus.OK);
     }
 
-    @GetMapping("/sortBooksByTitle")
-    public List<Book> sortedByTitle(){
 
-        return this.bookRepository.getSortedBooks();
+
+
+    @GetMapping("/sortBooksByTitle")
+    public ResponseEntity<List<Book>> sortedByTitle(){
+
+        List<Book> sortedBooks = this.bookRepository.getSortedBooks();
+
+        return new ResponseEntity<>(sortedBooks, HttpStatus.OK);
     }
 
     @GetMapping("/getBooksByAuthor/{author}")
