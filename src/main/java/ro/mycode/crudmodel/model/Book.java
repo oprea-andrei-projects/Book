@@ -37,4 +37,12 @@ public class Book implements Comparable<Book> {
 
       return this.getYear()-o.getYear();
     }
+
+    @Override
+    public boolean equals(Object o){
+
+        Book b = (Book) o;
+
+        return this.getTitle().equals(b.getTitle());
+    }
 }

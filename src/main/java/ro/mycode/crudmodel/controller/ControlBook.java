@@ -1,47 +1,47 @@
 package ro.mycode.crudmodel.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
+import ro.mycode.crudmodel.service.ServiceBook;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
+@Slf4j
 public class ControlBook {
+
     private BookRepository bookRepository;
-    public ControlBook(BookRepository bookRepository) {
+    private ServiceBook serviceBook;
+    public ControlBook(BookRepository bookRepository, ServiceBook serviceBook) {
         this.bookRepository = bookRepository;
+        this.serviceBook = serviceBook;
     }
 
 
-//    @GetMapping("/allBooks")
-//    public List<Book> getAllBooks(){
-//        return  this.bookRepository.findAll();
-//    }
+
 
     @GetMapping("/allBooks")
     public ResponseEntity<List<Book>> getAllBooks(){
 
-        List<Book> books = this.bookRepository.findAll();
+
+        List<Book> books = this.serviceBook.getAllBooks();
 
         return new ResponseEntity<>(books, HttpStatus.OK);
 
     }
 
-//    @PostMapping("/addBook")
-//    public  Book addBook(@RequestBody Book book){
-//        this.bookRepository.save(book);
-//        return  book;
-//    }
+
 
     @PostMapping("/addBook")
     public ResponseEntity<Book> addBoook(@RequestBody Book book){
 
-        this.bookRepository.save(book);
+        this.serviceBook.addBook(book);
 
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
@@ -53,33 +53,30 @@ public class ControlBook {
     @PutMapping("/updateBook")
     public ResponseEntity<Book>  updateBook(@RequestBody Book book){
 
-        Book book1 = bookRepository.findById(book.getId()).get();
+        this.serviceBook.updateBook(book);
 
-        book1.setTitle(book.getTitle());
-        book1.setAuthor(book.getAuthor());
-        book1.setGenre(book.getGenre());
-        book1.setYear(book.getYear());
-
-            this.bookRepository.save(book1);
-        return new ResponseEntity<>(book1,HttpStatus.OK);
+        return new ResponseEntity<>(book,HttpStatus.OK);
 
 
     }
 
-    //end-point trimit id si primesc cartea
+
     @GetMapping("/findBook/{id}")
-    public Book myBook(@PathVariable Long id){
-        return bookRepository.findById(id).get();
+    public ResponseEntity<Book> myBook(@PathVariable Long id){
+
+        Book book = this.serviceBook.findTheBookByID(id);
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
 
 
     @DeleteMapping("/deleteBook/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
+    public ResponseEntity<Long> deleteBook(@PathVariable Long id){
 
-        Book myBook = this.bookRepository.findById(id).get();
-        this.bookRepository.delete(myBook);
-        return new ResponseEntity<>(myBook, HttpStatus.OK);
+        this.serviceBook.deleteBook(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
 
@@ -88,40 +85,35 @@ public class ControlBook {
     @GetMapping("/sortBooksByTitle")
     public ResponseEntity<List<Book>> sortedByTitle(){
 
-        List<Book> sortedBooks = this.bookRepository.getSortedBooks();
+       List<Book> sortedBooks = this.serviceBook.sortBooksByTitle();
 
         return new ResponseEntity<>(sortedBooks, HttpStatus.OK);
     }
 
     @GetMapping("/getBooksByAuthor/{author}")
-    public List<Book> booksbyAuthor(@PathVariable String author){
+    public ResponseEntity<List<Book>> booksbyAuthor(@PathVariable String author){
 
-        return this.bookRepository.getBookByAuthor(author);
+        List<Book> books = this.serviceBook.getBooksByTheAtuthor(author);
+
+        return new ResponseEntity<>(books,HttpStatus.OK);
     }
 
     @GetMapping("/getOldestBook")
-    public Book oldie(){
+    public ResponseEntity<Book> oldie(){
 
-        return this.bookRepository.getOldestBook();
+        Book b  = this.serviceBook.getTheOldestBook();
+
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
-    @GetMapping("/allGenres")
-    public List<String> myGenreList(){
 
-        return this.bookRepository.genres();
-    }
 
     @GetMapping("/findByGenre/{genre}")
-    public List<Book> bookByGenre(@PathVariable String genre){
-
-        return this.bookRepository.findAll().stream()
-                .filter(e->e.getGenre().equalsIgnoreCase(genre))
-                .collect(Collectors.toList());
+    public ResponseEntity<List<Book>> bookByGenre(@PathVariable String genre){
+        List<Book> books = this.serviceBook.getTheBookByGenre(genre);
+        return new ResponseEntity<>(books, HttpStatus.OK);
 
 
     }
-
-
-
 
 }

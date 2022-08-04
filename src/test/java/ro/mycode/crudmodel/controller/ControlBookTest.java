@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ro.mycode.crudmodel.CrudModelApplication;
 import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
+import ro.mycode.crudmodel.service.ServiceBook;
 
 
 import java.util.*;
@@ -40,6 +41,9 @@ class ControlBookTest {
 
     @MockBean
     private BookRepository mockBookRepo;
+
+    @MockBean
+    private ServiceBook mockBookService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -147,7 +151,27 @@ class ControlBookTest {
 //               .andExpect(status().isOk())
 
 
+    }
 
+    @Test
+    void test_getBookByAuthor() throws Exception {
+
+        Book b  = new Book("book","author","gen",2000);
+        b.setId(1L);
+        Book b1 = new Book("book1","author1","gen1",1999);
+        b1.setId(2L);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Book>books = new ArrayList<>();
+        books.add(b);
+        books.add(b1);
+
+        when(mockBookService.getBooksByTheAtuthor("author1")).thenReturn(books);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/getBooksByAuthor/{author}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(asJsonString(books)));
 
     }
 

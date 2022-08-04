@@ -32,7 +32,7 @@ public class CrudModelApplication {
 //              bookRepository.getNewestBook().entrySet().stream()
 //                   .forEach(e-> System.out.println(e.getKey() + e.getValue()));
 
-            bookRepository.genres().stream().forEach(System.out::println);
+       bookRepository.getBookByGenre("Classic").stream().forEach(System.out::println);
 
         };
 

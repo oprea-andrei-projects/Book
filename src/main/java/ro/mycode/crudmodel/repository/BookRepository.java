@@ -13,7 +13,7 @@ import java.util.Map;
 public interface BookRepository extends JpaRepository<Book,Long> {
 
 
-    @Query("select  b from Book b order by b.title asc ")
+    @Query("select  b from Book b order by b.title desc")
      List<Book> getSortedBooks();
 
     @Query("select  b from Book b where b.author = ?1 ")
@@ -27,5 +27,12 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     @Query("select distinct b.genre from Book b order by b.genre")
      List<String> genres();
+
+    @Query("select b from Book b where b.title = ?1")
+    Book bookByTitle(String title);
+
+    @Query("select b from Book b where b.genre = ?1")
+    List<Book> getBookByGenre(String genre);
+
 
 }
