@@ -31,6 +31,64 @@ export default class Api{
 
    async getBooks(){
     return this.api("allBooks").then(data=>data.json());
+
+   }
+
+    async sortedBookByTitle(){
+
+        let x = await this.api(`sortBooksByTitle`,`GET`);
+
+        let y = await x.json();
+
+        console.log(y);
+
+        return y;
+
+    }
+
+    async findBookByIAuthor(author){
+
+        return this.api(`getBooksByAuthor/${author}`,`GET`).then(data=>data.json());
+
+    }
+
+    async findoldie(){
+
+        return this.api(`getOldestBook`,`GET`).then(data=>data.json());
+    }
+
+
+    async createBook(book){
+
+        let data = await this.api("addBook",'POST',book);
+
+        return data;
+    }
+
+    async updateTheBook(book){
+
+        let data = await this.api("updateBook", "PUT", book);
+
+        let data2 = data.json();
+
+        console.log(data2);  
+
+        return data2;
+    }
+
+    async deleteDasBook(id){
+
+       let data =  await this.api(`deleteBook/${id}`,`DELETE`);
+        let data2 = data.json();
+       console.log(data2);
+
+    }
+
+
+
+
+
+
 }
 
 
@@ -49,4 +107,3 @@ export default class Api{
 
 
 
-}

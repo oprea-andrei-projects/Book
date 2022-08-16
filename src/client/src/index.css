@@ -81,6 +81,20 @@ label{
   width: 150px;
   height: 40px;
   background-color: orange;
+  margin-left: 5px;
+
+
+}
+
+.deleteBook{
+
+  margin-top: 20px;
+
+  width: 150px;
+  height: 40px;
+  background-color: orange;
+
+  margin-left: 5px;
 
 
 }

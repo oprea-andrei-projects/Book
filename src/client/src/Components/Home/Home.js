@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Api from "../../Api.js";
 
 import Book from "./Book.js";
@@ -6,6 +6,10 @@ import Book from "./Book.js";
 function Home() {
 
     let [books,setBooks]=useState([]);
+
+
+    let inputEl = useRef(null);
+
 
 
     let fetchBooks = async ()=>{
@@ -31,23 +35,64 @@ function Home() {
 
     },[])
 
-    useEffect(()=>{
+    let handleSortByTitle = async ()=>{
+
+        let api = new Api();
+
+        let newArr = await api.sortedBookByTitle();
+
+        setBooks(newArr);
+    }
+
+    let findTheBook = async ()=>{
+
+     
+        let api = new Api();
+
+        let myArr = await api.findBookByIAuthor(inputEl.current.value);
 
        
-        console.log(books);
+       setBooks(myArr);
 
-    },[books])
+    }
+
+    let handleOldie = async ()=>{
+
+        let api = new Api();
+
+        let arr = await api.findoldie();
+
+        
+      
+        setBooks([arr]);
+
+
+    }
+
+    let createBook = async ()=>{
+
+
+        
+
+
+    }
+ 
 
     return (
 
         <>
             <header>
-                <button class="buton">Create Book</button>
-                <input type="button" value="Sort By Title" id="sortTitle" class="sortTitle" />
+                <button className="buton" onClick={createBook}>Create Book</button>
+              
+                <button className="sortTitle" onClick={handleSortByTitle}>Sort By Title</button>
+
                 <label for="author">Author </label>
-                <input type="text" id="author" class="author" />
-                <input type="button" value="Find" id="findBook" class="findBook" />
-                <input type="button" value="Oldie" id="findOldie" class="findOldie" />
+                <input type="text" ref={inputEl} className="author" />
+                <button className="findBook" onClick={findTheBook}>Find</button>
+
+
+                <input type="button" value="Oldie" id="findOldie" className="findOldie" onClick={handleOldie} />
+
                 <label for="box1">Search Genre</label>
                 <select id="box1" class="box1">
                 </select>
@@ -81,6 +126,7 @@ function Home() {
                         )
                     }
                 </tbody>
+
             </table>
 
         </>
