@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
+import ro.mycode.crudmodel.service.ServiceBook;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CrudModelApplication {
 
     @Bean
     CommandLineRunner commandLineRunner(
-            BookRepository bookRepository) {
+            ServiceBook serviceBook) {
         return args -> {
 
 //            bookRepository.getSortedBooks().stream().forEach(System.out::println);
@@ -32,7 +33,9 @@ public class CrudModelApplication {
 //              bookRepository.getNewestBook().entrySet().stream()
 //                   .forEach(e-> System.out.println(e.getKey() + e.getValue()));
 
-       bookRepository.getBookByGenre("Classic").stream().forEach(System.out::println);
+      // bookRepository.getBookByGenre("Classic").stream().forEach(System.out::println);
+
+            serviceBook.addBook(new Book("4urueyryr","yqywgdugdq","bcucuec",1900));
 
         };
 

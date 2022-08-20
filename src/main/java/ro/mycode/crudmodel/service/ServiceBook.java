@@ -1,6 +1,7 @@
 package ro.mycode.crudmodel.service;
 
 import org.springframework.stereotype.Service;
+import ro.mycode.crudmodel.dto.BookDTO;
 import ro.mycode.crudmodel.exceptions.BookAlreadyExistsException;
 import ro.mycode.crudmodel.exceptions.NoBooksByThisAuthorException;
 import ro.mycode.crudmodel.exceptions.WrongIDException;
@@ -27,12 +28,12 @@ public class ServiceBook {
 
     public void addBook(Book b){
 
-        Optional<Book> optionalBook = Optional.of(this.bookRepository.bookByTitle(b.getTitle()));
-
-        if(optionalBook.isEmpty()==false){
-
-            throw new BookAlreadyExistsException("Book already exists exception !!! ");
-        }
+//        Optional<Book> optionalBook = Optional.of(this.bookRepository.bookByTitle(b.getTitle()));
+//
+//        if(optionalBook.isEmpty()==false){
+//
+//            throw new BookAlreadyExistsException("Book already exists exception !!! ");
+//        }
 
         this.bookRepository.save(b);
 

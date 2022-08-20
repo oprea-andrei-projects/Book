@@ -1,6 +1,5 @@
 import React, { useEffect, useState,useRef } from "react";
 import Api from "../../Api.js";
-
 import Book from "./Book.js";
 
 function Home() {
@@ -16,12 +15,7 @@ function Home() {
 
         let api= new Api();
 
-
         let x = await api.getBooks();
-
-
-       
-
 
         setBooks(x);
 

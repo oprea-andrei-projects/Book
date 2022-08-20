@@ -7,5 +7,6 @@ import Home from './Components/Home/Home';
 import Update from './Components/Update/Update';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    
     <Update />
 );

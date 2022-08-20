@@ -29,7 +29,6 @@ public class ControlBook {
     @GetMapping("/allBooks")
     public ResponseEntity<List<Book>> getAllBooks(){
 
-
         List<Book> books = this.serviceBook.getAllBooks();
 
         return new ResponseEntity<>(books, HttpStatus.OK);
@@ -39,7 +38,7 @@ public class ControlBook {
 
 
     @PostMapping("/addBook")
-    public ResponseEntity<Book> addBoook(@RequestBody Book book){
+    public ResponseEntity<Book> addBook(@RequestBody Book book){
 
         this.serviceBook.addBook(book);
 
