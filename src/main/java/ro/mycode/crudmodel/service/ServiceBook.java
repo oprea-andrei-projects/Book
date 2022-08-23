@@ -88,6 +88,11 @@ public class ServiceBook {
 
     }
 
+    public List<Book> sortBookByTitleAsc(){
+
+        return this.bookRepository.getSortedBooksAsc();
+    }
+
     public List<Book> getBooksByTheAtuthor(String author){
 
         List<Book> books = this.bookRepository.getBookByAuthor(author);
@@ -101,6 +106,11 @@ public class ServiceBook {
 
     }
 
+
+
+
+
+
     public Book getTheOldestBook(){
 
 
@@ -110,6 +120,11 @@ public class ServiceBook {
     public List<Book> getTheBookByGenre(String genre){
 
         return this.bookRepository.getBookByGenre(genre);
+    }
+
+    public List<String> getAllTheGenres(){
+
+        return this.bookRepository.getAllGenres();
     }
 
 

@@ -1,5 +1,6 @@
 package ro.mycode.crudmodel.model;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import lombok.NoArgsConstructor;
@@ -7,8 +8,9 @@ import org.hibernate.annotations.SortComparator;
 
 
 import javax.persistence.*;
-
-import static java.lang.Integer.compare;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="books")
@@ -19,9 +21,19 @@ public class Book implements Comparable<Book> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty
+    @Size(min = 2,message = "Title is mandatory")
     private String title;
+    @NotEmpty
+    @Size(min=2,message = "Author is mandatory")
     private String author;
+    @NotEmpty
+    @Size(
+            min=2,
+            message = "Genre is mandatory"
+    )
     private String genre;
+
     private int year;
 
     public Book(String title, String author, String genre, int year) {

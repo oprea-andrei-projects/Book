@@ -48,9 +48,43 @@ export default class Api{
 
     }
 
+    async sortedBooksByTitleAsc(){
+
+        let x = await this.api(`sortBooksByTitleAsc`,`GET`);
+
+        let y = await x.json();
+
+        return y;
+    }
+
     async findBookByIAuthor(author){
 
-        return this.api(`getBooksByAuthor/${author}`,`GET`).then(data=>data.json());
+        try{
+            let data = await this.api(`getBooksByAuthor/${author}`,`GET`);
+
+            let data2 = await data.json();
+
+            if(data2.status == 400){
+
+                alert(data2.message);
+
+                return [];
+            }
+
+            else{
+
+                
+                return data2;
+            }
+
+
+
+        }catch(e){
+
+
+        }
+
+        
 
     }
 
@@ -73,8 +107,6 @@ export default class Api{
 
         let data2 = data.json();
 
-        console.log(data2);  
-
         return data2;
     }
 
@@ -82,10 +114,29 @@ export default class Api{
 
        let data =  await this.api(`deleteBook/${id}`,`DELETE`);
         let data2 = data.json();
-       console.log(data2);
-
     }
 
+    async getTheBookById(id){
+        return this.api(`findBook/${id}`,`GET`).then(data=>data.json());
+    }
+
+    async getAllDasGenres(){
+
+        let data = await this.api('getAllGenres','GET');
+        let data2 = await data.json();
+
+       
+        return data2;
+    }
+
+    async findByGenre(genre){
+
+        let data = await this.api(`findByGenre/${genre}`,`GET`);
+        let data2 = await data.json();
+
+        console.log(data2);
+        return data2;
+    }
 
 
 

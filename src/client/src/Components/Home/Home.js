@@ -1,10 +1,20 @@
 import React, { useEffect, useState,useRef } from "react";
 import Api from "../../Api.js";
 import Book from "./Book.js";
+import Spinner from 'react-bootstrap/Spinner';
+
+
+import {useNavigate} from "react-router-dom"
+
 
 function Home() {
 
     let [books,setBooks]=useState([]);
+    let [genres, setGenres] = useState([]);
+
+
+
+    let navigate=useNavigate();
 
 
     let inputEl = useRef(null);
@@ -26,8 +36,11 @@ function Home() {
     useEffect(()=>{
 
         fetchBooks();
+        genre();
 
     },[])
+
+ 
 
     let handleSortByTitle = async ()=>{
 
@@ -40,14 +53,16 @@ function Home() {
 
     let findTheBook = async ()=>{
 
-     
         let api = new Api();
 
-        let myArr = await api.findBookByIAuthor(inputEl.current.value);
+        let myArr = [];
+        myArr = await api.findBookByIAuthor(inputEl.current.value);
 
+        if(myArr.length!=0){
+            setBooks(myArr);
+        }
        
-       setBooks(myArr);
-
+       
     }
 
     let handleOldie = async ()=>{
@@ -67,29 +82,101 @@ function Home() {
 
 
         
+        navigate("/add");
 
 
     }
+
+    let genre = async ()=>{
+
+        let api = new Api();
+
+        let genreArray = await api.getAllDasGenres();
+
+       setGenres(genreArray);
+
+       console.log(genres);
+
+    }
+
+    let handleSelection = async (e)=>{
+
+
+        let obj = e.target;
+        let api = new Api();
+        let y = await api.findByGenre(obj.value);
+       
+        setBooks(y);
+
+
+    }
+
+    let handleTitle = async ()=>{
+
+        console.log('clicked');
+        let api = new Api();
+
+        let x = await api.getBooks();
+
+        setBooks(x);
+    }
+
+    let handleSortByTitleAsc = async ()=>{
+
+
+        let api = new Api();
+
+        let x = await api.sortedBooksByTitleAsc();
+        
+        setBooks(x);
+
+    }
+
+
  
 
     return (
 
         <>
             <header>
-                <button className="buton" onClick={createBook}>Create Book</button>
-              
-                <button className="sortTitle" onClick={handleSortByTitle}>Sort By Title</button>
 
-                <label for="author">Author </label>
-                <input type="text" ref={inputEl} className="author" />
-                <button className="findBook" onClick={findTheBook}>Find</button>
+                <div className="menu">
+
+                    <h1 onClick={handleTitle}>Books</h1>
+
+                    
+                    <input type="text" ref={inputEl} id="author" className="author" />
+                    <button className="findBook" onClick={findTheBook}>Find By Author</button>
 
 
-                <input type="button" value="Oldie" id="findOldie" className="findOldie" onClick={handleOldie} />
+                </div>
 
-                <label for="box1">Search Genre</label>
-                <select id="box1" class="box1">
-                </select>
+                <div className="selections">
+
+                    <button className="buton" onClick={createBook}>Create Book</button>
+                    
+                    <button className="sortTitle" onClick={handleSortByTitle}>Sort By Title Desc</button>
+                    <button className="sortTitleAsc" onClick={handleSortByTitleAsc}>Sort By Title Asc</button>
+
+                    <select id="selItem" className="div1"  onChange={handleSelection}> 
+                        <option placeholder="Choose Genre">Choose Genre</option>       
+
+                    {
+                        genres.map(e=>{  
+                            return <option value={e} >{e}</option>
+                        })
+                    }
+
+                    </select>      
+
+
+
+                </div>
+
+               
+
+
+                
             </header>
             <table class="myTable">
 
@@ -109,7 +196,9 @@ function Home() {
                         books.length==0
                         ?
                         (
-                            <p>Loading ....</p>
+                            <Spinner animation="border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
                         )
                         :
                         (

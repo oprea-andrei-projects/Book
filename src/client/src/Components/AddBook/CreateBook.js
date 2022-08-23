@@ -2,71 +2,129 @@
 import Api from "../../Api";
 import React, { useEffect, useState } from "react";
 import Book from "../Home/Book";
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from "react-router-dom"
 
 
-
-function CreateBook(){
-
-
-    let [title,setTitle] = useState('');
-    let [author,setAuthor] = useState('');
-    let [genre,setGenre] = useState('');
-    let [year,setYear] = useState('');
+function CreateBook() {
 
 
-    useEffect(()=>{
+    let [title, setTitle] = useState('');
+    let [author, setAuthor] = useState('');
+    let [genre, setGenre] = useState('');
+    let [year, setYear] = useState('');
 
-
-         
-
-    },[title,author,genre,year])
+    let [clicked, setClicked] = useState(false);
+    let [errors, setErrors] = useState([]);
 
 
 
 
 
+    useEffect(() => {
+
+        valid();
 
 
-    let handleChange=(e)=>{
+    }, [])
 
-        
-        let obj=e.target;
+
+
+    let navigate = useNavigate();
+
+
+    let valid = () => {
+
+        setErrors([]);
+
+
+        if (title == "") {
+
+            setErrors(prev => {
+
+                return [...prev, "Tilte is required"];
+            })
+        }
+
+        if (author == "") {
+
+
+            setErrors(prev => {
+
+                return [...prev, "Author is required"]
+            })
+        }
+
+        if (genre == "") {
+
+            setErrors(prev => {
+
+                return [...prev, "Genre is required"]
+            })
+        }
+
+        if (year == "") {
+
+            setErrors(prev => {
+
+                return [...prev, "Year is required"]
+            })
+        }
+
+
+
+
+
+    }
+
+
+    let handleChange = (e) => {
+
+        let obj = e.target;
 
         console.log(obj);
-        if(obj.classList.contains("title")){
+        if (obj.classList.contains("title")) {
 
             setTitle(obj.value);
 
-            console.log(title);
+
+
+
         }
 
-        if(obj.classList.contains("author")){
+        if (obj.classList.contains("author")) {
 
             setAuthor(obj.value);
 
-            console.log(author);
+
+
+
         }
 
-        if(obj.classList.contains("genre")){
+        if (obj.classList.contains("genre")) {
 
             setGenre(obj.value);
 
-            console.log(genre);
+
         }
 
-        if(obj.classList.contains("year")){
+        if (obj.classList.contains("year")) {
 
             setYear(obj.value);
 
-            console.log(year);
+
+
+
         }
+
+        valid();
     }
 
-    let handleClick = async ()=>{
+    let handleClick = async () => {
 
 
-       
-        let book={
+        setClicked(true);
+        let book = {
 
             title,
             author,
@@ -77,13 +135,28 @@ function CreateBook(){
 
         let api = new Api();
 
-        let x = await api.createBook(book);
+
+        if (errors.length == 0) {
+
+            let x = await api.createBook(book);
+
+            navigate("/");
+
+        }                       
+    }
+
+    let handleCancel = () => {
+
+
+        navigate("/")
+
     }
 
 
-    return(
+    return (
 
         <>
+
 
             <h1>New Book</h1>
 
@@ -110,11 +183,20 @@ function CreateBook(){
 
                 <input type="button" value="Create New Book" id="newBook" className="newBook" onClick={handleClick} />
 
-                <input type="button" value="Cancel" id="cancel" className="cancel" />
+                <input type="button" value="Cancel" id="cancel" className="cancel" onClick={handleCancel} />
+
+                {
+                    clicked && errors.map(e => {
+
+                        return <Alert key='danger' variant='danger'>
+                                {e}
+                                </Alert>
+                    })
+                }
 
 
             </form>
-            </>
+        </>
     )
 }
 

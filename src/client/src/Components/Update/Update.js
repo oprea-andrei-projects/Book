@@ -1,40 +1,44 @@
-import React, { useState } from "react";
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useHistory
-  } from "react-router-dom";
-
-
+import React, { useState,useEffect } from "react";
 import Api from "../../Api.js";
-
+import {  useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Update(){
 
-    // let [book, setBook] = useState({id : 219, title : 'bbbbbbb', author: 'ccccccc', genre:"ddddddd", year: 11111 });
+   
 
 
-    let [id, setId] = useState(220);
-    let [title, setTitle] = useState('bbbbbbb');
-    let [author, setAuthor] = useState('ccccccc');
-    let [genre, setGenre] = useState('ddddddd');
-    let [year, setYear] = useState(11111);
+    let {id}=useParams();
+    let [title, setTitle] = useState('');
+    let [author, setAuthor] = useState('');
+    let [genre, setGenre] = useState('');
+    let [year, setYear] = useState();
    
     
-    // useEffect(()=>{
+    useEffect(()=>{
 
 
-         
+       getTheBook();
 
-    // },[title,author,genre,year])
+    
+
+    },[])
     
     
+    let getTheBook = async ()=>{
+
+        let api = new Api();
+
+        let x = await api.getTheBookById(id);
+
+        setTitle(x.title);
+        setAuthor(x.author);
+        setGenre(x.genre);
+        setYear(x.year);
+
+    }
     
-    
-    
+    const navigate = useNavigate();
 
     let updateDasBook= async(e)=>{
 
@@ -54,10 +58,12 @@ export default function Update(){
 
         let x = await api.updateTheBook(book);
 
+        navigate("/");
 
     }
 
     let handleOnChnage = (e)=>{
+
 
 
         let obj=e.target;
@@ -111,17 +117,14 @@ export default function Update(){
 
         await api.deleteDasBook(book.id);
 
-
+        navigate("/");
 
     }
 
+    let handleCancel = ()=>{
 
-    const history = useHistory();
-   
-  
-
-
-
+        navigate("/");
+    }
 
 
     return(
@@ -157,7 +160,7 @@ export default function Update(){
 
                 <input type="button" value="Delete Book" id="deleteBook" class="deleteBook" onClick={handleDelete} />
 
-                <input type="button" value="Cancel" id="cancel" class="cancel" onClick={history.goBack}  />
+                <input type="button" value="Cancel" id="cancel" class="cancel" onClick={handleCancel}  />
 
 
             </form>

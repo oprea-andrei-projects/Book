@@ -18,15 +18,7 @@ caption{
     margin-top: 20px;
 }
 
-.buton{
-  margin-top: 30px;
-  margin-bottom: 30px;
-  background: green;
-  color: white;
-  font-size: 20px;
-  width: 110px;
-  border-radius: 10% 10%;
-}
+
 
 thead th{
 
@@ -97,4 +89,122 @@ label{
   margin-left: 5px;
 
 
+}
+
+
+
+h1{
+
+  cursor: pointer;
+}
+
+.buton{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  width: 110px;
+  border-radius: 10% 10%;
+}
+
+.sortTitle{
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  width: 110px;
+  border-radius: 10% 10%;
+
+}
+
+.findOldie{
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  width: 110px;
+  border-radius: 10% 10%;
+
+}
+
+.sortTitleAsc{
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  width: 110px;
+  border-radius: 10% 10%;
+
+}
+
+.menu{
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.author{
+
+  margin-left: auto;
+}
+
+.selections{
+
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.div1{
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  width: 150px;
+  height: 36px;
+  margin-right: 0px;
+  
+  border-radius: 10% 10%;
+
+}
+.pTitle{
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.title{
+
+  margin-left: 25px;
+}
+
+.author{
+
+  margin-left: 6px;
+}
+.genre{
+
+  margin-left: 13px;
+}
+
+.year{
+
+  margin-left: 26px;
+}
+
+.cancel{
+  margin-left: 0;
 }

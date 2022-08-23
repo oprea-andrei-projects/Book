@@ -35,7 +35,9 @@ public class CrudModelApplication {
 
       // bookRepository.getBookByGenre("Classic").stream().forEach(System.out::println);
 
-            serviceBook.addBook(new Book("4urueyryr","yqywgdugdq","bcucuec",1900));
+
+
+
 
         };
 

@@ -8,6 +8,7 @@ import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
 import ro.mycode.crudmodel.service.ServiceBook;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class ControlBook {
 
 
     @GetMapping("/allBooks")
-    public ResponseEntity<List<Book>> getAllBooks(){
+    public ResponseEntity<List<Book>> getAllBooks() throws InterruptedException {
 
         List<Book> books = this.serviceBook.getAllBooks();
 
@@ -38,7 +39,7 @@ public class ControlBook {
 
 
     @PostMapping("/addBook")
-    public ResponseEntity<Book> addBook(@RequestBody Book book){
+    public ResponseEntity<Book> addBook(@Valid @RequestBody Book book){
 
         this.serviceBook.addBook(book);
 
@@ -89,6 +90,14 @@ public class ControlBook {
         return new ResponseEntity<>(sortedBooks, HttpStatus.OK);
     }
 
+    @GetMapping("/sortBooksByTitleAsc")
+    public ResponseEntity<List<Book>> sortedByTitleAsc(){
+
+        List<Book> sortedBooksAsc = this.serviceBook.sortBookByTitleAsc();
+
+        return new ResponseEntity<>(sortedBooksAsc, HttpStatus.OK);
+    }
+
     @GetMapping("/getBooksByAuthor/{author}")
     public ResponseEntity<List<Book>> booksbyAuthor(@PathVariable String author){
 
@@ -114,5 +123,13 @@ public class ControlBook {
 
 
     }
+
+    @GetMapping("/getAllGenres")
+    public ResponseEntity<List<String>> getAllBookGenres(){
+        List<String> genrelist = this.serviceBook.getAllTheGenres();
+
+        return new ResponseEntity<>(genrelist, HttpStatus.OK);
+    }
+
 
 }
