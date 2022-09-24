@@ -169,15 +169,13 @@ function Home() {
 
                     </select>      
 
-
-
                 </div>
-
-               
-
-
                 
             </header>
+
+
+
+
             <table class="myTable">
 
 

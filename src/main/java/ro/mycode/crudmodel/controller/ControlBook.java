@@ -121,11 +121,11 @@ public class ControlBook {
         List<Book> books = this.serviceBook.getTheBookByGenre(genre);
         return new ResponseEntity<>(books, HttpStatus.OK);
 
-
     }
 
     @GetMapping("/getAllGenres")
     public ResponseEntity<List<String>> getAllBookGenres(){
+
         List<String> genrelist = this.serviceBook.getAllTheGenres();
 
         return new ResponseEntity<>(genrelist, HttpStatus.OK);

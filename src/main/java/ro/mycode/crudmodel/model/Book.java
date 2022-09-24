@@ -21,17 +21,17 @@ public class Book implements Comparable<Book> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty
-    @Size(min = 2,message = "Title is mandatory")
+//    @NotEmpty
+//    @Size(min = 2,message = "Title is mandatory")
     private String title;
-    @NotEmpty
-    @Size(min=2,message = "Author is mandatory")
+//    @NotEmpty
+//    @Size(min=2,message = "Author is mandatory")
     private String author;
-    @NotEmpty
-    @Size(
-            min=2,
-            message = "Genre is mandatory"
-    )
+//    @NotEmpty
+//    @Size(
+//            min=2,
+//            message = "Genre is mandatory"
+//    )
     private String genre;
 
     private int year;
