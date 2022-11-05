@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Selections({setValue, titleDesc, titleAsc,genre}){
+export default function Selections({setValue, titleDesc, titleAsc,genre, findByGenre}){
 
     
     let handleCreateBook = ()=>{
@@ -17,7 +17,7 @@ export default function Selections({setValue, titleDesc, titleAsc,genre}){
 
        await titleDesc()
 
-        console.log("aicia")
+      
     }
 
     let handleTitleAsc = async ()=>{
@@ -25,13 +25,13 @@ export default function Selections({setValue, titleDesc, titleAsc,genre}){
         await titleAsc();
     }
 
-    // let handleOptions = async (e)=>{
+    let handleOptions = async (e)=>{
 
-    //     let obj = e.target;
+        let obj = e.target;
 
-    //     await findByGenre(obj.value);
+        await findByGenre(obj.value);
 
-    // }
+    }
 
 
 
@@ -44,13 +44,25 @@ export default function Selections({setValue, titleDesc, titleAsc,genre}){
                 <button className="sortTitle" onClick={handleTitleDesc}>Sort By Title Desc</button>
                 <button className="sortTitleAsc" onClick={handleTitleAsc} >Sort By Title Asc</button>
 
-                <select id="selItem" className="div1"> 
+                <select id="selItem" className="div1" onChange={handleOptions}> 
                     <option placeholder="Choose Genre">Choose Genre</option>       
 
                 {
+                 
+              
+                 genre.length==0
+                 ?
+                 (
+                    <p>Loading...</p>
+                 )
+                 :
+                 (
                     genre.map(e=>{  
                         return <option value={e}>{e}</option>
                     })
+
+                 )
+                
                 }
 
                 </select>      

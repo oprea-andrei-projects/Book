@@ -3,7 +3,7 @@ import Menu from "./Menu";
 import Selections from "./Selections";
 import TableBooks from "./TableBooks";
 
-export default function Header({setTab , std,sta,genuri}){
+export default function Header({setTab,std,sta,genuri,bbg}){
 
 
 
@@ -13,7 +13,7 @@ export default function Header({setTab , std,sta,genuri}){
 
         <>
             <Menu />
-            <Selections setValue={setTab} titleDesc={std} titleAsc={sta} genre={genuri} />
+            <Selections setValue={setTab} titleDesc={std} titleAsc={sta} genre={genuri} findByGenre={bbg} />
         
         </>
     )

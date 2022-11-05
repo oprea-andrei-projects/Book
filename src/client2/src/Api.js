@@ -111,7 +111,6 @@ export default class Api{
 
     async findBookByGenre(genre){
 
-
         let x = await this.api(`findByGenre/${genre}`,`GET`);
 
         let y = await x.json();

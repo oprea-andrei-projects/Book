@@ -19,7 +19,7 @@ function App() {
   genre: "Fiction narrative",
   year: 2873})
 
-  let [genres, setGenres] = useState();
+  let [genres, setGenres] = useState([]);
 
   let [sourceBook, setSB] = useState({id:" ",title: " ",
   author: " ",
@@ -143,7 +143,7 @@ function App() {
         
                   return( <>
         
-                    <Header setTab={setVal} std={sortingTitleDesc} sta={sortingTitleAsc} genuri={genres} />
+                    <Header setTab={setVal} std={sortingTitleDesc} sta={sortingTitleAsc} genuri={genres} bbg={bookByGenre}/>
                     <TableBooks carti={books} setV={setVal} sb={setSB} />
     
                   </>);
