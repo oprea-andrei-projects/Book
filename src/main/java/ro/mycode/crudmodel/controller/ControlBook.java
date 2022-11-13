@@ -3,6 +3,7 @@ package ro.mycode.crudmodel.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ro.mycode.crudmodel.model.Book;
 import ro.mycode.crudmodel.repository.BookRepository;
@@ -28,6 +29,7 @@ public class ControlBook {
 
 
     @GetMapping("/allBooks")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<List<Book>> getAllBooks() throws InterruptedException {
 
         List<Book> books = this.serviceBook.getAllBooks();
