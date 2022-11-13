@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ro.mycode.crudmodel.security.UserPermission;
 import ro.mycode.crudmodel.security.UserRole;
 
@@ -24,6 +25,13 @@ public class User implements UserDetails {
     private String mail;
 
     private String password;
+
+
+    public User (String mail, String password){
+
+        this.mail = mail;
+        this.password = new BCryptPasswordEncoder().encode(password);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
