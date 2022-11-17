@@ -154,6 +154,15 @@ export default class Api{
        
     }
 
+    async register(user){
+
+        let x = await this.api(`user/register`,`POST`,user);
+
+        let y = await x.json();
+
+        console.log(y);
+    }
+
 
 
 

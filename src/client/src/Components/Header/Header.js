@@ -1,12 +1,14 @@
 import React , {useContext} from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import {Context} from '../../Context';
-
+import Cookies from "js-cookie";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Header(){
 
 
     const [user,setUser]=useContext(Context);
+    let navigate = useNavigate();
 
     return(
         <>
@@ -15,22 +17,20 @@ export default function Header(){
             user
             ?
             (
-                <p>Warm Welcome {user.mail}</p>
+                <div className="welcome">
+
+                <p>Warm Welcome {user.mail} </p>
+                <p className="logout" onClick={()=>{
+                    Cookies.remove("authenticatedUser");
+                    navigate("/");
+                    setUser(undefined);
+                }}>Logout</p>
+                </div>
+              
             )
             :
             (
-            <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Sign In/Out
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                
-                    <Dropdown.Item href="#/action-2">Login</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
-
-                </Dropdown.Menu>
-            </Dropdown>
+                <p>Please login or register </p>
             
             )
         }

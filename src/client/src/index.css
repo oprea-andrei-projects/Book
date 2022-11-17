@@ -208,3 +208,15 @@ h1{
 .cancel{
   margin-left: 0;
 }
+
+.welcome{
+
+  display: flex;
+  flex-direction: row;
+}
+
+.logout{
+
+  margin-left: auto;
+  cursor: pointer;
+}
