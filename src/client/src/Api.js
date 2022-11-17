@@ -3,7 +3,7 @@ export default class Api{
 
 
 
-   api(path, method='GET', body=null){
+   api(path, method='GET', body=null, token=null){
 
         const url = "http://localhost:8080/" + path;
 
@@ -25,14 +25,18 @@ export default class Api{
             options.body = JSON.stringify(body);
         }
 
+        if(token){
+            options.headers['Authorization']= `Bearer ${token}`;
+        }
+
       
 
         return fetch(url, options);
 
    }
 
-   async getBooks(){
-    return this.api("allBooks").then(data=>data.json());
+   async getBooks(token){
+    return this.api("allBooks",`GET`,null, token).then(data=>data.json());
 
    }
 
@@ -93,7 +97,6 @@ export default class Api{
         return this.api(`getOldestBook`,`GET`).then(data=>data.json());
     }
 
-
     async createBook(book){
 
         let data = await this.api("addBook",'POST',book);
@@ -120,9 +123,9 @@ export default class Api{
         return this.api(`findBook/${id}`,`GET`).then(data=>data.json());
     }
 
-    async getAllDasGenres(){
+    async getAllDasGenres(token){
 
-        let data = await this.api('getAllGenres','GET');
+        let data = await this.api('getAllGenres','GET',null,token);
         let data2 = await data.json();
 
        
@@ -136,6 +139,19 @@ export default class Api{
 
         console.log(data2);
         return data2;
+    }
+
+    async login(user){
+
+        let x = await this.api(`user/login`,`POST`,user);
+        let message = "error";
+        if(x.status==403){
+            return message;
+        }else{
+            return x;
+        }
+
+       
     }
 
 
