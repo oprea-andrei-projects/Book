@@ -1,21 +1,19 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState,useRef , useContext} from "react";
 import Api from "../../Api.js";
 import Book from "./Book.js";
 import Spinner from 'react-bootstrap/Spinner';
-
-
 import {useNavigate} from "react-router-dom"
-
+import Header from "../Header/Header.js";
+import { Context } from "../../Context";
 
 function Home() {
 
     let [books,setBooks]=useState([]);
     let [genres, setGenres] = useState([]);
 
-
+    const [user,setUser] = useContext(Context);
 
     let navigate=useNavigate();
-
 
     let inputEl = useRef(null);
 
@@ -25,7 +23,9 @@ function Home() {
 
         let api= new Api();
 
-        let x = await api.getBooks();
+        console.log(user);
+
+        let x = await api.getBooks(user.token);
 
         setBooks(x);
 
@@ -35,8 +35,17 @@ function Home() {
 
     useEffect(()=>{
 
-        fetchBooks();
-        genre();
+        if(!user){
+
+            navigate("/")
+        }else{
+
+            fetchBooks();
+            genre();
+
+        }
+
+       
 
     },[])
 
@@ -71,19 +80,13 @@ function Home() {
 
         let arr = await api.findoldie();
 
-        
-      
         setBooks([arr]);
-
 
     }
 
     let createBook = async ()=>{
-
-
         
         navigate("/add");
-
 
     }
 
@@ -91,7 +94,7 @@ function Home() {
 
         let api = new Api();
 
-        let genreArray = await api.getAllDasGenres();
+        let genreArray = await api.getAllDasGenres(user.token);
 
        setGenres(genreArray);
 
@@ -143,7 +146,7 @@ function Home() {
                 <div className="menu">
 
                     <h1 onClick={handleTitle}>Books</h1>
-
+                   
                     
                     <input type="text" ref={inputEl} id="author" className="author" />
                     <button className="findBook" onClick={findTheBook}>Find By Author</button>
