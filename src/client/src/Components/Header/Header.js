@@ -23,7 +23,7 @@ export default function Header(){
                 <p className="logout" onClick={()=>{
                     Cookies.remove("authenticatedUser");
                     navigate("/");
-                    setUser(undefined);
+                    setUser(undefined); x
                 }}>Logout</p>
                 </div>
               

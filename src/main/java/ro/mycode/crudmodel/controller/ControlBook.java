@@ -31,11 +31,8 @@ public class ControlBook {
     @GetMapping("/allBooks")
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<List<Book>> getAllBooks() throws InterruptedException {
-
         List<Book> books = this.serviceBook.getAllBooks();
-
         return new ResponseEntity<>(books, HttpStatus.OK);
-
     }
 
 
