@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @Slf4j
+@RequestMapping("/api/v1/books")
 public class ControlBook {
 
     private BookRepository bookRepository;
@@ -29,7 +30,7 @@ public class ControlBook {
 
 
     @GetMapping("/allBooks")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+//    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<List<Book>> getAllBooks() throws InterruptedException {
         List<Book> books = this.serviceBook.getAllBooks();
         return new ResponseEntity<>(books, HttpStatus.OK);
