@@ -18,7 +18,7 @@ import static ro.mycode.crudmodel.constans.Util.JWT_TOKEN_HEADER;
 @RestController
 @CrossOrigin
 @RequestMapping("/user")
-public class eUserController {
+public class UserController {
 
     private UserService userService;
     private AuthenticationManager authenticationManager;

@@ -33,11 +33,6 @@
         </tr>
    </thead>
    <tbody class="tableBody">
-        <tr>
-            <th class="titlu" scope="row">Hamlet</th>
-            <td>Shakespeare</td>
-            <td>Drama</td>
-            <td>1523</td>
-        </tr>
+    <tr class="book" *ngFor="let book of books" [book]="book"></tr>
    </tbody>
 </table>
